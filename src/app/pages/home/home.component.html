@@ -5,17 +5,21 @@
     <main class="mb-auto mt-10 text-center">
         <h2>Welcome to the URL Shortner Service</h2>
         <p>Use the form below to shorten your URLs:</p>
-        <form class="mt-15 text-start ">
+        <form 
+            [formGroup]="shortnerForm" 
+            (ngSubmit)="getShortenedUrl()"
+            class="mt-15 text-start "
+        >
             <label for="urlInput">Enter URL:</label>
             <div class="grid grid-cols-4 gap-3 md:flex">
                 <input 
-                    class="px-3 py-1 border border-gray-600 rounded-md col-span-4 md:w-2xl bg-indigo-100"
                     type="text" 
-                    id="urlInput" 
-                    name="urlInput" 
+                    id="url" 
+                    name="url" 
+                    formControlName="url"
                     placeholder="https://your-long-url.com"
-                    minlength="5" 
                     required
+                    class="px-3 py-1 border border-gray-600 rounded-md col-span-4 md:w-2xl bg-indigo-100"
                 >
                 <button 
                     class="px-4 py-1 bg-blue-500 text-indigo-100 rounded-md hover:bg-blue-600 hover:text-white transition-colors duration-200 col-span-1 cursor-pointer"
@@ -25,10 +29,10 @@
             </div>
         </form>
     
-        <div *ngIf="textToCopy" class="mt-10 text-start">
+        <div *ngIf="textToCopy" class="mt-10 text-start flex flex-col">
             <p>Shortened URL:</p>
-            <div class="flex space-x-3 mt-1">
-                <span class=" text-gray-700">{{textToCopy}}</span>
+            <div class="flex space-x-3">
+                <span class=" text-gray-700 pl-5">{{textToCopy}}</span>
                 <button 
                     class="flex text-sm"
                     ngxClipboard [cbContent]="textToCopy"
@@ -36,7 +40,12 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 h-full cursor-pointer">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
                     </svg> 
-                </button>
+                </button> 
+            </div>
+
+            <div>
+                <p> Expires At: </p>  
+                <span class="pl-5 text-gray-700">{{expiresAt}} </span>
             </div>
         </div>
     </main>
